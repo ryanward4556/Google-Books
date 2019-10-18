@@ -17,10 +17,10 @@ class Detail extends Component {
     } catch (err) {
       console.log(err)
     }
-    
-    // API.getBook(this.props.match.params.id)
-    //   .then(book => this.setState({ book: book.data }))
-    //   .catch(err => console.log(err));
+
+    API.getBook(this.props.match.params.id)
+      .then(book => this.setState({ book: book.data }))
+      .catch(err => console.log(err));
   }
 
   render() {
