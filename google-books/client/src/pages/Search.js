@@ -7,13 +7,13 @@ import { Col, Row, Container } from "../components/Grid";
 import { List, ListItem } from "../components/List";
 import { Input, TextArea, FormBtn } from "../components/Form";
 
-
-class Saved extends Component {
+class Search extends Component {
     state = {
         search: ""
     };
+
     componentDidMount() {
-        this.loadBooks();
+        console.log("search mounted");
     }
     // loadBooks = () => {
     //     API.getBooks()
@@ -27,6 +27,26 @@ class Saved extends Component {
     //         .then(res => this.loadBooks())
     //         .catch(err => console.log(err));
     // };
+
+    handleInputChange = event => {
+        const { name, value } = event.target;
+        this.setState({
+            [name]: value
+        });
+        console.log(this.state)
+    };
+
+    handleFormSubmit = event => {
+        event.preventDefault();
+        console.log("submitted")
+        if (this.state.search.length >= 1) {
+            API.getBooks(this.state.search)
+                .then(res => {
+                    console.log(res)
+                })
+                .catch(err => console.log(err));
+        }
+    };
 
     render() {
         return (
@@ -62,4 +82,4 @@ class Saved extends Component {
     }
 }
 
-export default Saved;
+export default Search;

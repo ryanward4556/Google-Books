@@ -15,9 +15,9 @@ class Books extends Component {
     synopsis: ""
   };
 
-  componentDidMount() {
-    this.loadBooks();
-  }
+  // componentDidMount() {
+  //   this.loadBooks();
+  // }
 
   loadBooks = () => {
     API.getBooks()
