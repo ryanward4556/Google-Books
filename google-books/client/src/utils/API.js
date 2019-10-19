@@ -8,9 +8,11 @@ let query = "https://www.googleapis.com/books/v1/volumes?q=";
 export default {
   // Gets all books
   getBooks: function (search) {
+    console.log(googleKey)
+
     let qSearch = query + search;
     console.log(qSearch)
-    qSearch += "+inauthor:keyes&key=AIzaSyBLHDVqA4r2Ldz6sYVbnEoLwYyqOfVARq4"
+    qSearch += "&key=AIzaSyBLHDVqA4r2Ldz6sYVbnEoLwYyqOfVARq4"
     console.log(qSearch)
     return axios.get(qSearch);
   },

@@ -1,15 +1,20 @@
 import React, { Component } from "react";
-import DeleteBtn from "../components/DeleteBtn";
 import Jumbotron from "../components/Jumbotron";
 import API from "../utils/API";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
+import { Input, FormBtn } from "../components/Form";
 import { List, ListItem } from "../components/List";
-import { Input, TextArea, FormBtn } from "../components/Form";
 
 class Search extends Component {
     state = {
-        search: ""
+        search: "",
+        books: []
+        // authors: "",
+        // description: "",
+        // image: "",
+        // link: "",
+        // title: ""
     };
 
     componentDidMount() {
@@ -43,10 +48,21 @@ class Search extends Component {
             API.getBooks(this.state.search)
                 .then(res => {
                     console.log(res)
+                    this.setState({ books: res.data.items })
+                    console.log(this.state)
                 })
-                .catch(err => console.log(err));
+                .catch(err => console.log(err))
         }
     };
+
+    // returnResults = arr => {
+    //     const listResults = arr.map((book) =>
+    //         <li key={book}>
+    //             {book}
+    //         </li>
+    //     )
+    //     return listResults;
+    // }
 
     render() {
         return (
@@ -75,7 +91,33 @@ class Search extends Component {
                             </div>
                         </Row>
                     </Col>
+                </Row>
+                <Row>
+                    <Col size="sm-12">
+                        {this.state.books.length ? (
+                            <List>
+                                {this.state.books.map(book => (
+                                    <ListItem key={book.id}>
+                                        <a href={book.volumeInfo.infoLink} target="_blank" rel="noopener noreferrer">
+                                            <strong>
+                                                {book.volumeInfo.title} by {book.volumeInfo.authors}
+                                            </strong>
+                                            <p>Description: {book.volumeInfo.description}</p>
+                                            if ({book.volumeInfo.imageLinks === undefined}) {
+                                                <p>No Image Provided</p>
+                                            } else {
+                                                <img src={book.volumeInfo.imageLinks.thumbnail} alt={book.volumeInfo.title}></img>
+                                            }
 
+                                        </a>
+                                        {/* <DeleteBtn onClick={() => this.deleteBook(book._id)} /> */}
+                                    </ListItem>
+                                ))}
+                            </List>
+                        ) : (
+                                <h3>No Results to Display</h3>
+                            )}
+                    </Col>
                 </Row>
             </Container>
         );
